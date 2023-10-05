@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://frcvxbedb0sh"]
+
+[ext_resource type="Script" path="res://StarsTile.gd" id="1_i8byh"]
+
+[node name="StarsTile" type="Node3D"]
+transform = Transform3D(1, 0, 2.50111e-11, 0, 1, -2.32831e-10, -3.34239e-11, 0, 1, 0, 0, 0)
+script = ExtResource("1_i8byh")

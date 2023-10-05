@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://c3e76x0n5kgi"]
+
+[ext_resource type="Script" path="res://star_system.gd" id="1_c4jo4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_66f6h"]
+albedo_color = Color(0, 0, 0, 1)
+metallic_specular = 0.0
+roughness = 0.0
+emission_enabled = true
+emission = Color(0.956863, 0.788235, 0, 1)
+emission_energy_multiplier = 10.02
+
+[sub_resource type="SphereMesh" id="SphereMesh_e8dr6"]
+
+[node name="StarSystem" type="Node3D"]
+transform = Transform3D(0.165, 1.92085e-11, -4.98971e-12, -1.92085e-11, 0.165, -3.84171e-11, 4.98971e-12, 3.84171e-11, 0.165, 0, 0, 0)
+script = ExtResource("1_c4jo4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 8.75389e-11, -4.65661e-10, 1, -4.65661e-10, -2.81943e-11, 9.31323e-10, 1, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_66f6h")
+mesh = SubResource("SphereMesh_e8dr6")
