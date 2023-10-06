@@ -4,11 +4,13 @@ extends Node3D
 var rng = RandomNumberGenerator.new()
 
 func generate(
-	location: Vector3i,
+	coords: Vector3i,
 	star_system_scene: PackedScene,
 	density: float,
 	tile_size: float,
 ):
+	rng.seed = hash(coords)
+	
 	for i in range(floor(density)):
 		var x = rng.randf_range(0, tile_size)
 		var y = rng.randf_range(0, tile_size)

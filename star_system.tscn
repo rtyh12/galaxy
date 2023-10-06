@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://c3e76x0n5kgi"]
+[gd_scene load_steps=6 format=3 uid="uid://c3e76x0n5kgi"]
 
 [ext_resource type="Script" path="res://star_system.gd" id="1_c4jo4"]
 
@@ -12,6 +12,10 @@ emission_energy_multiplier = 10.02
 
 [sub_resource type="SphereMesh" id="SphereMesh_e8dr6"]
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_43gn8"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_ixm1c"]
+
 [node name="StarSystem" type="Node3D"]
 transform = Transform3D(0.165, 1.92085e-11, -4.98971e-12, -1.92085e-11, 0.165, -3.84171e-11, 4.98971e-12, 3.84171e-11, 0.165, 0, 0, 0)
 script = ExtResource("1_c4jo4")
@@ -20,3 +24,13 @@ script = ExtResource("1_c4jo4")
 transform = Transform3D(1, 0, 8.75389e-11, -4.65661e-10, 1, -4.65661e-10, -2.81943e-11, 9.31323e-10, 1, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_66f6h")
 mesh = SubResource("SphereMesh_e8dr6")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 1.38848e-17, -1.04083e-17, -3.46874e-17, 1, -2.77556e-17, 3.46945e-18, 2.77556e-17, 1, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, -1.38707e-17, 1.04083e-17, 2.77626e-17, 1, 2.77556e-17, 0, -2.77556e-17, 1, 0, 0, 0)
+shape = SubResource("SphereShape3D_43gn8")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+mesh = SubResource("SphereMesh_ixm1c")

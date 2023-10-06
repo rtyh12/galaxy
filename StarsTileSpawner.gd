@@ -1,27 +1,22 @@
 extends Node3D
 
+const RangeVector3i = preload("res://RangeVector3i.gd")
+
+
 
 @export var tile_size: float
 var loaded_tiles = {}
 
-func make_range(begin: Vector3i, end: Vector3i):
-	var output = []
-	for x in range(begin.x, end.x + 1):
-		for y in range(begin.y, end.y + 1):
-			for z in range(begin.z, end.z + 1):
-				output.append(Vector3(x, y, z))
-	
-	return output
 
 func _process(delta):
-	var radius = 20
-	var begin = Vector3(-radius, -radius, 0)
-	var end = Vector3(radius, radius, 0)
+	var radius = 10
+	var begin = Vector3(-radius, -radius, -1)
+	var end = Vector3(radius, radius, -1)
 	
 	var star_system_prefab = load("res://star_system.tscn")
 	var tile_prefab = load("res://stars_tile.tscn")
 	
-	for coords in make_range(begin, end):
+	for coords in RangeVector3i.new(begin, end):
 		if loaded_tiles.has(coords):
 			continue
 		

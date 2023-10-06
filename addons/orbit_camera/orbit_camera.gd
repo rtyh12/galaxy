@@ -1,5 +1,7 @@
 extends Camera3D
 
+signal camera_moved(position: Vector3)
+
 # External var
 @export var SCROLL_SPEED: float = 10 # Speed when use scroll mouse
 @export var ZOOM_SPEED: float = 5 # Speed use when is_zoom_in or is_zoom_out is true
@@ -66,8 +68,11 @@ func _input(event):
 		_process_touch_zoom_event(event)
 
 func _process_mouse_rotation_event(e: InputEventMouseMotion):
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+	var rmb = Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT)
+	var mmb = Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE)
+	if rmb or mmb:
 		_move_speed = e.relative
+		camera_moved.emit(position)
 
 func _process_mouse_scroll_event(e: InputEventMouseButton):
 	if e.button_index == MOUSE_BUTTON_WHEEL_UP:
