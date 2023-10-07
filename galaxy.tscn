@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cv5g5e28w8hig"]
+[gd_scene load_steps=7 format=3 uid="uid://cv5g5e28w8hig"]
 
 [ext_resource type="Script" path="res://addons/orbit_camera/orbit_camera.gd" id="1_gsiu0"]
 [ext_resource type="Script" path="res://StarsTileSpawner.gd" id="2_26khp"]
+[ext_resource type="Script" path="res://Raycaster.gd" id="2_irjbp"]
+[ext_resource type="Script" path="res://StarHoverUI.gd" id="4_4ba3j"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_uau3t"]
 
@@ -34,6 +36,11 @@ ROTATE_SPEED = 0.1
 ANCHOR_NODE_PATH = NodePath("..")
 MOUSE_ZOOM_SPEED = 1000.0
 
+[node name="Raycaster" type="Node3D" parent="ship/CameraAnchor" node_paths=PackedStringArray("CAMERA", "CONTROL")]
+script = ExtResource("2_irjbp")
+CAMERA = NodePath("../OrbitCamera")
+CONTROL = NodePath("../../../Control")
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.999999, -0.00104712, 0.000789286, -0.000792151, -0.00273882, 0.999996, -0.00104495, -0.999996, -0.00273965, 0, 0, 0)
 
@@ -44,3 +51,16 @@ environment = SubResource("Environment_yb2l8")
 transform = Transform3D(0.999999, -0.00104712, 0.000789286, -0.000792151, -0.00273882, 0.999996, -0.00104495, -0.999996, -0.00273965, 0, 0, 0)
 script = ExtResource("2_26khp")
 tile_size = 10.0
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("4_4ba3j")
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "BLSBSKLBKL"

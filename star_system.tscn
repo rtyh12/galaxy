@@ -29,6 +29,7 @@ mesh = SubResource("SphereMesh_e8dr6")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 1.38848e-17, -1.04083e-17, -3.46874e-17, 1, -2.77556e-17, 3.46945e-18, 2.77556e-17, 1, 0, 0, 0)
+visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 transform = Transform3D(1, -1.38707e-17, 1.04083e-17, 2.77626e-17, 1, 2.77556e-17, 0, -2.77556e-17, 1, 0, 0, 0)

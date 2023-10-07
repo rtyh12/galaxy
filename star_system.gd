@@ -5,6 +5,7 @@ extends Node3D
 
 @export var COLLISION_BODY: Node3D
 
+
 func _ready():
 	var camera_emitter = $/root/galaxy/ship/CameraAnchor/OrbitCamera
 	camera_emitter.connect("camera_moved", _on_camera_moved)
