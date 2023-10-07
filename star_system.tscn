@@ -16,11 +16,13 @@ emission_energy_multiplier = 10.02
 
 [sub_resource type="SphereMesh" id="SphereMesh_ixm1c"]
 
-[node name="StarSystem" type="Node3D"]
+[node name="StarSystem" type="Node3D" node_paths=PackedStringArray("COLLISION_BODY")]
 transform = Transform3D(0.165, 1.92085e-11, -4.98971e-12, -1.92085e-11, 0.165, -3.84171e-11, 4.98971e-12, 3.84171e-11, 0.165, 0, 0, 0)
 script = ExtResource("1_c4jo4")
+collision_mesh_base_scale = 0.12
+COLLISION_BODY = NodePath("StaticBody3D")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="CollisionMesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 8.75389e-11, -4.65661e-10, 1, -4.65661e-10, -2.81943e-11, 9.31323e-10, 1, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_66f6h")
 mesh = SubResource("SphereMesh_e8dr6")

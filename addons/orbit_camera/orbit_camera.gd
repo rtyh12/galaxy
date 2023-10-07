@@ -35,6 +35,8 @@ func _process(delta: float):
 	if is_zoom_out:
 		_scroll_speed = 1 * ZOOM_SPEED
 	_process_transformation(delta)
+	
+	camera_moved.emit(global_position)
 
 func _process_transformation(delta: float):
 	# Update rotation
@@ -72,7 +74,6 @@ func _process_mouse_rotation_event(e: InputEventMouseMotion):
 	var mmb = Input.is_mouse_button_pressed(MOUSE_BUTTON_MIDDLE)
 	if rmb or mmb:
 		_move_speed = e.relative
-		camera_moved.emit(position)
 
 func _process_mouse_scroll_event(e: InputEventMouseButton):
 	if e.button_index == MOUSE_BUTTON_WHEEL_UP:

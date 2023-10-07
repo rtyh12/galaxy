@@ -3,10 +3,8 @@ extends Node3D
 const RangeVector3i = preload("res://RangeVector3i.gd")
 
 
-
 @export var tile_size: float
 var loaded_tiles = {}
-
 
 func _process(delta):
 	var radius = 10
