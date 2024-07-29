@@ -20,7 +20,7 @@ func _process(delta):
 		
 		var tile = tile_prefab.instantiate()
 		tile.position = coords * tile_size
-		var density = 10
+		var density = 3
 		tile.generate(coords, star_system_prefab, density, tile_size)
 		add_child(tile)
 		loaded_tiles[coords] = tile

@@ -20,54 +20,75 @@ var is_zoom_in: bool
 var is_zoom_out: bool
 
 # Transform var
-var _rotation: Vector3
-var _distance: float
 var _anchor_node: Node3D
+var _rotation: Vector3
+var _target_rotation: Vector3:
+	set(value):
+		_target_rotation = value
+		_rotation = _target_rotation
+		
+#		if value == _target_rotation:
+#			print(value)
+#			return
+#
+#		create_tween().tween_property(
+#			self,
+#			"_rotation",
+#			value,
+#			1,
+#		).set_trans(Tween.TRANS_EXPO) \
+#		.set_ease(Tween.EASE_OUT)
+
+var _distance: float
+var _target_distance: float:
+	set(value):
+		if value == _target_distance:
+			return
+		value = clamp(value, min_distance, max_distance)
+		create_tween().tween_property(self, "_distance", value, 1) \
+			.set_trans(Tween.TRANS_EXPO) \
+			.set_ease(Tween.EASE_OUT)
+
+@export var min_distance: float
+@export var max_distance: float
 
 func _ready():
 	_distance = DEFAULT_DISTANCE
 	_anchor_node = self.get_node(ANCHOR_NODE_PATH)
-	_rotation = _anchor_node.transform.basis.get_rotation_quaternion().get_euler()
+	_rotation = _anchor_node.transform.basis \
+		.get_rotation_quaternion().get_euler()
 
 func _process(delta: float):
 	if is_zoom_in:
 		_scroll_speed = -1 * ZOOM_SPEED
 	if is_zoom_out:
 		_scroll_speed = 1 * ZOOM_SPEED
-	_process_transformation(delta)
-	
-	camera_moved.emit(global_position)
-
-func _process_transformation(delta: float):
+		
 	# Update rotation
-	_rotation.x += -_move_speed.y * delta * ROTATE_SPEED
-	_rotation.y += -_move_speed.x * delta * ROTATE_SPEED
-	if _rotation.x < -PI/2:
-		_rotation.x = -PI/2
-	if _rotation.x > PI/2:
-		_rotation.x = PI/2
+	_target_rotation.x += -_move_speed.y * delta * ROTATE_SPEED
+	_target_rotation.y += -_move_speed.x * delta * ROTATE_SPEED
+	if _target_rotation.x < -PI/2:
+		_target_rotation.x = -PI/2
+	if _target_rotation.x > PI/2:
+		_target_rotation.x = PI/2
 	_move_speed = Vector2()
 	
 	# Update distance
-	_distance += _scroll_speed * delta
-	if _distance < 0:
-		_distance = 0
+	_target_distance = _distance + _scroll_speed * delta
 	_scroll_speed = 0
 	
 	self.set_identity()
-	self.translate_object_local(Vector3(0,0,_distance))
+	self.translate_object_local(Vector3(0, 0, _distance))
 	_anchor_node.set_identity()
 	_anchor_node.transform.basis = Basis(Quaternion.from_euler(_rotation))
+	
+	camera_moved.emit(global_position)
 
 func _input(event):
-	if event is InputEventScreenDrag:
-		_process_touch_rotation_event(event)
-	elif event is InputEventMouseMotion:
+	if event is InputEventMouseMotion:
 		_process_mouse_rotation_event(event)
 	elif event is InputEventMouseButton:
 		_process_mouse_scroll_event(event)
-	elif event is InputEventScreenTouch:
-		_process_touch_zoom_event(event)
 
 func _process_mouse_rotation_event(e: InputEventMouseMotion):
 	var rmb = Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT)
@@ -80,27 +101,3 @@ func _process_mouse_scroll_event(e: InputEventMouseButton):
 		_scroll_speed = -1 * SCROLL_SPEED
 	elif e.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 		_scroll_speed = 1 * SCROLL_SPEED
-
-func _process_touch_rotation_event(e: InputEventScreenDrag):
-	if _touches.has(e.index):
-		_touches[e.index] = e.position
-	if _touches.size() == 2:
-		var _keys = _touches.keys()
-		var _pos_finger_1 = _touches[_keys[0]] as Vector2
-		var _pos_finger_2 = _touches[_keys[1]] as Vector2
-		var _dist = _pos_finger_1.distance_to(_pos_finger_2)
-		if _old_touche_dist != -1:
-			_scroll_speed = (_dist - _old_touche_dist) * MOUSE_ZOOM_SPEED
-		_old_touche_dist = _dist
-	elif _touches.size() < 2:
-		_old_touche_dist = -1
-		_move_speed = e.relative
-	
-func _process_touch_zoom_event(e: InputEventScreenTouch):
-	if e.pressed:
-		if not _touches.has(e.index):
-			_touches[e.index] = e.position
-	else:
-		if _touches.has(e.index):	
-			# warning-ignore:return_value_discarded
-			_touches.erase(e.index)

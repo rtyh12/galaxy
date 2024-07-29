@@ -16,12 +16,15 @@ func _physics_process(delta):
 	var query = PhysicsRayQueryParameters3D.create(from, to)
 	var result = space_state.intersect_ray(query)
 	
+	CONTROL.queue_redraw()
 	CONTROL.hoveringOverStar = result.has("collider")
 	if CONTROL.hoveringOverStar:
 		var hovered_star_pos = result["collider"].global_position
 		var indicator_pos = CAMERA.unproject_position(hovered_star_pos)
 		CONTROL.hovered_star_location = indicator_pos
+		
+		var clicking = Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)
+		CONTROL.clickingOnStar = clicking
+		
 #		print(indicator_pos)
 #		CONTROL.draw_circle(indicator_pos, 5000, Color.ALICE_BLUE)
-	CONTROL.queue_redraw()
-

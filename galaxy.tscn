@@ -19,22 +19,24 @@ glow_blend_mode = 1
 [node name="galaxy" type="Node3D"]
 
 [node name="ship" type="Node3D" parent="."]
-visible = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="ship"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+transform = Transform3D(0.16, 0, 0, 0, -6.99382e-09, 0.16, 0, -0.16, -6.99382e-09, 0, 0, 0)
 mesh = SubResource("PrismMesh_uau3t")
 
 [node name="CameraAnchor" type="Node3D" parent="ship"]
 
 [node name="OrbitCamera" type="Camera3D" parent="ship/CameraAnchor"]
 transform = Transform3D(0.999974, 0.000796669, -0.00711332, -0.000863449, 0.999956, -0.00938989, 0.00710552, 0.00939579, 0.999931, -0.0336618, -0.00256777, 0.026094)
-fov = 38.8
+fov = 30.2
 script = ExtResource("1_gsiu0")
-SCROLL_SPEED = 500.0
+SCROLL_SPEED = 2500.0
+ZOOM_SPEED = 20.0
 ROTATE_SPEED = 0.1
 ANCHOR_NODE_PATH = NodePath("..")
 MOUSE_ZOOM_SPEED = 1000.0
+min_distance = 10.0
+max_distance = 250.0
 
 [node name="Raycaster" type="Node3D" parent="ship/CameraAnchor" node_paths=PackedStringArray("CAMERA", "CONTROL")]
 script = ExtResource("2_irjbp")
@@ -58,9 +60,3 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("4_4ba3j")
-
-[node name="Label" type="Label" parent="Control"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-text = "BLSBSKLBKL"

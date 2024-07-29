@@ -6,9 +6,9 @@ extends Control
 @export var hovered_star_indicator_segment_count = 4
 @export var hovered_star_indicator_spinning_offset_radians = 0
 var hoveringOverStar: bool
+var clickingOnStar: bool
 var hovered_star_location: Vector2
 
-# Called when the node enters the scene tree for the first time.
 func _draw():
 	if hoveringOverStar:
 		var segments = hovered_star_indicator_segment_count
@@ -21,7 +21,7 @@ func _draw():
 				(i * TAU + offset) / segments + gap,
 				((i + 1) * TAU + offset) / segments - gap,
 				50,
-				Color.ALICE_BLUE,
+				Color.ALICE_BLUE if clickingOnStar else Color.LIGHT_SLATE_GRAY,
 				2,
 				true)
 
